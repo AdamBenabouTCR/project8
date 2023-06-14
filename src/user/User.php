@@ -4,19 +4,17 @@ session_start();
 
 class User
 {
+    protected $userId;
     protected $usermail;
     protected $password;
 
-    public function __construct($usermail = NULL, $password = NULL)
+    public function __construct($userId = NULL, $usermail = NULL, $password = NULL)
     {
         global $conn;
 
-        $this->userId = NULL;
+        $this->userId = $userId;
         $this->usermail = $usermail;
         $this->password = $password;
-        $this->username = NULL;
-        $this->usernummer = NULL;
-        $this->userrol = NULL;
 
         $this->conn = $conn;
     }
@@ -40,13 +38,16 @@ class User
     {
         require "./src/klant/oopconnect.php";
 
+        $userId = NULL;
+
         $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
 
         $sql = $conn->prepare
         ("
-        insert into users values(:userMail, :password)
+        insert into users values(:userID, :userMail, :password)
         ");
 
+        //$sql->bindParam(":userID, $userId");
         $sql->bindParam(":userMail", $this->usermail);
         $sql->bindParam(":password", $passwordHash);
         $sql->execute();

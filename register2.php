@@ -42,12 +42,13 @@
 <h1>Account aanmaken</h1>
 
 <?php
-require "src/users/User.php";
+require "src/user/User.php";
 
+$userId= NULL;
 $usermail=$_POST["usermailvak"];
 $password=$_POST["passwordvak"];
 
-$user1 = new User($usermail, $password);
+$user1 = new User($userId, $usermail, $password);
 $user1->createUser();
 ?>
 </body>

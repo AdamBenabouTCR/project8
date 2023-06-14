@@ -28,7 +28,7 @@
 </div>
 </body>
 <?php
-require "src/users/User.php";
+require "src/user/User.php";
 
 $userMail=$_POST["emailvak"];
 $password=$_POST["passwordvak"];
