@@ -1,8 +1,9 @@
-<!doctype html>
-<html lang="nl">
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Read klant</title>
+    <title>Index</title>
+    <link rel="stylesheet" href="styles/indexstyle.css">
     <style>
         ul {
             list-style-type: none;
@@ -35,18 +36,23 @@
 </head>
 <header>
     <ul>
-        <li><a href="../mainmenu.php">Menu</a></li>
-        <li><a href="../index.php">Uitloggen</a></li>
+        <li><a href="index.php">Inloggen als je een account heb</a></li>
     </ul>
 </header>
 <body>
-<h1>Alle klanten</h1>
 
+
+</body>
 <?php
+require "src/user/User.php";
+//echo "<pre>".print_r($_POST, true)."</pre>";
+$userId = NULL;
+$usermail=$_POST["emailvak"];
+$password=$_POST["passwordvak"];
 
-require "../src/user/User.php";
-$user1 = new User();
-$user1->readUser();
+
+$user1 = new User($userId, $usermail, $password);
+$user1->login();
 ?>
 </body>
 </html>

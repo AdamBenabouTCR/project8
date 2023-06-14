@@ -42,15 +42,21 @@ class User
 
         $passwordHash = password_hash($this->password, PASSWORD_DEFAULT);
 
+        $passwordHash = $this->password;
+
         $sql = $conn->prepare
         ("
         insert into users values(:userID, :userMail, :password)
         ");
 
-        //$sql->bindParam(":userID, $userId");
-        $sql->bindParam(":userMail", $this->usermail);
+        $sql->bindParam(":userID", $userID);
+        $sql->bindParam(":userMail", $this->userMail);
         $sql->bindParam(":password", $passwordHash);
-        $sql->execute();
+        $sql->execute([
+            "userID"=>$userID,
+            "userMail"=>$this->usermail,
+            "password"=>$passwordHash,
+        ]);
         echo "User toegevoegd<br/>";
 
         echo "Account aangemaakt";
@@ -59,18 +65,59 @@ class User
 
     public function login()
     {
+
         require "./src/klant/oopconnect.php";
 
         $sql = $conn->prepare("select * from users where userMail=:userMail");
         $sql->bindParam(":userMail", $this->usermail);
         $sql->execute();
+        echo "password:" . $this->password . "<br/>";
+        echo "usermail:" . $this->usermail . "<br/>";
         foreach($sql as $user)
-        {if(password_verify($this->password, $user["password"]))
-        {echo"<a href='./mainmenu.php'>goed ingelogd<br/>";}
-        else
-        {echo "Niet ingelogd, de gegevens kloppen niet!<br/>";}
+        {
+            //echo $this->password . "<br/>";
+
+            echo $this->usermail . "<br/>";
+
+            echo "gevonden password:" . $user["password"] . "<br/>";
+
+            //if (password_verify($this->password, $user["password"]))
+            if ($this->password = $user["password"])
+            {
+                echo "<a href='mainmenu.php'>goed ingelogd</a><br/>";
+            }
+            else
+            {
+                echo "Niet ingelogd, de gegevens kloppen niet!<br/>";
+            }
         }
 
+        /* if (isset($_POST["submit"])) {
+                $userMail = $this->get_usermail();
+                $password = $this->get_password();
+
+
+                $result = $this->sqlMetResult(["userMail"=>$userMail, "password"=>$password]);
+
+                if (isset($result[0]->userRol) == 1) {
+                    echo "correcte gegevens";
+                    $_SESSION["userRol"] = $result[0]->userRol;
+                    echo $_SESSION["userRol"];
+
+                    if ($_SESSION["userRol"] == 1) {
+                        header("Location: ./mainmenu.php");
+                    }
+                    if ($_SESSION["userRol"] == 2) {
+                        header("Location: ./mainmenu.php");
+                    }
+                    if ($_SESSION["userRol"] == 3) {
+                        header("Location: ./mainmenu.php");
+                    }
+
+                } else {
+                    echo "verkeerde gegevens";
+                }
+        */
     }
 
     public function allUsers()
