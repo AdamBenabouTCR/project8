@@ -46,7 +46,7 @@
 
 require "../src/user/User.php";
 $user1 = new User();
-$user1->readUser();
+$user1->allUsers();
 ?>
 </body>
 </html>

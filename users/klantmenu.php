@@ -58,8 +58,6 @@
     </ul>
 </header>
 welkom<br>
-<div class="button"><a href="createKlantFormulier1.php">Create</a><br></div>
 <div class="button"><a href="readKlant.php">Read</a><br></div>
-<div class="button"><a href="searchKlantFormulier1.php">Search</a><br></div>
 </body>
 </html>
